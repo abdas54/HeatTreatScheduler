@@ -1,0 +1,217 @@
+<mvc:View controllerName="ey.meg.root.controller.Home" height="100%"
+  xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified"
+  xmlns:l="sap.ui.layout" xmlns="sap.m">
+  <Page showHeader="false" floatingFooter="true" title="Heat Treat Schedule">
+    <Bar class="HeaderClass">
+      <contentMiddle>
+        <Title text="Heat Treat Schedule" titleStyle="H5" />
+      </contentMiddle>
+      <contentLeft>
+        <Button press="onBack" icon="sap-icon://nav-back"/>
+        <Text text="" id="IDtext" class="MarginLeftCls"/>
+      </contentLeft>
+      <contentRight>
+        <Button text="Discrepancies" press="onDiscrepancies" /><!--Changed By Summer Li Date:2020.03.02 CR: DESK9A03WE OTRS:9901543-->
+        <Button text="Refresh Schedule" press="onRefresh" icon="sap-icon://refresh"/>
+        <Button text="Schedule New Tray" press="onScheduleNewTray" />
+      </contentRight>
+    </Bar>
+    <l:DynamicSideContent id="DynamicSideContent"
+      class="sapUiDSCExplored sapUiContentPadding" sideContentVisibility="AlwaysShow"
+      showSideContent="{path: 'stateModel>/legendShown'}" containerQuery="true"
+      breakpointChanged="updateToggleButtonState" height="95%">
+      <l:mainContent>
+        <VBox class="VboxClass">
+        <Panel expandable="true" expanded="true" width="auto" class="sapUiResponsiveMargin">
+        <headerToolbar>
+          <Toolbar height="3rem">
+            <Title text="HIGH" />
+            <ToolbarSpacer />
+            <Title text="" titleStyle="H5" id="IDhighdate"/>
+            <ToolbarSpacer />
+            <ToggleButton pressed="{path: 'stateModel>/legendShown'}"
+                icon="sap-icon://legend" tooltip="Legend" />
+          </Toolbar>
+        </headerToolbar>
+        <content>
+          <PlanningCalendar id="PC1" rowSelectionChange="onRowSelection"  appointmentSelect="onAppointmentSelect"
+            class="sapMPlanCalSuppressAlternatingRowColors clsFirstRowWidth"
+            startDate="{path: '/startDate1'}" rows="{path: '/people1'}"
+            appointmentsVisualization="Filled" showEmptyIntervalHeaders="false"
+            viewChange="handleViewChange" legend="PlanningCalendarLegend"
+            specialDates="{path: '/specialDates', templateShareable: 'true'}">
+            <toolbarContent>
+              <!-- <Title text="HIGH" titleStyle="H4" />
+              <ToolbarSpacer />
+              <Title text="" titleStyle="H5" id="IDhighdate"/>
+              <ToolbarSpacer />
+              <ToggleButton pressed="{path: 'stateModel>/legendShown'}"
+                icon="sap-icon://legend" tooltip="Legend" /> -->
+            </toolbarContent>
+            <rows>
+              <PlanningCalendarRow icon="{pic}" title="{name}"
+                text="{role}" specialDates="{path : 'specialDates', templateShareable: 'true'}"
+                appointments="{path : 'appointments', templateShareable: 'true'}"
+                intervalHeaders="{path: 'headers', templateShareable: 'true'}">
+                <specialDates>
+                  <unified:DateTypeRange startDate="{start}"
+                    endDate="{end}" type="{type}" />
+                </specialDates>
+                <appointments>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    text="{info}" color="{color}" tentative="{tentative}" tooltip="{title}">
+                  </unified:CalendarAppointment>
+                </appointments>
+                <intervalHeaders>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    type="{type}">
+                  </unified:CalendarAppointment>
+                </intervalHeaders>
+              </PlanningCalendarRow>
+            </rows>
+            <specialDates>
+              <unified:DateTypeRange startDate="{start}"
+                endDate="{end}" type="{type}">
+              </unified:DateTypeRange>
+            </specialDates>
+          </PlanningCalendar>
+          </content>
+          </Panel>
+
+          <Panel expandable="true" expanded="false" width="auto" class="sapUiResponsiveMargin">
+          <headerToolbar>
+            <Toolbar height="3rem">
+              <Title text="QUENCH" />
+              <ToolbarSpacer />
+              <Title text="" titleStyle="H5" id="IDquenchdate"/>
+              <ToolbarSpacer />
+              <ToggleButton pressed="{path: 'stateModel>/legendShown'}"
+                  icon="sap-icon://legend" tooltip="Legend" />
+            </Toolbar>
+          </headerToolbar>
+          <content>
+          <PlanningCalendar id="PC2"  appointmentSelect="onAppointmentSelect"
+            class="sapMPlanCalSuppressAlternatingRowColors clsFirstRowWidth"
+            startDate="{path: '/startDate2'}" rows="{path: '/people2'}"
+            appointmentsVisualization="Filled" showEmptyIntervalHeaders="false"
+            viewChange="handleViewChange" legend="PlanningCalendarLegend"
+            specialDates="{path: '/specialDates', templateShareable: 'true'}">
+            <toolbarContent>
+              <!-- <Title text="QUENCH" titleStyle="H4" />
+              <ToolbarSpacer />
+              <Title text="" titleStyle="H5" id="IDquenchdate"/>
+              <ToolbarSpacer />
+              <ToggleButton pressed="{path: 'stateModel>/legendShown'}"
+                icon="sap-icon://legend" /> -->
+            </toolbarContent>
+            <rows>
+              <PlanningCalendarRow icon="{pic}" title="{name}"
+                text="{role}" specialDates="{path : 'specialDates', templateShareable: 'true'}"
+                appointments="{path : 'appointments', templateShareable: 'true'}"
+                intervalHeaders="{path: 'headers', templateShareable: 'true'}">
+                <specialDates>
+                  <unified:DateTypeRange startDate="{start}"
+                    endDate="{end}" type="{type}" />
+                </specialDates>
+                <appointments>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    text="{info}" color="{color}" tentative="{tentative}" tooltip="{title}">
+                  </unified:CalendarAppointment>
+                </appointments>
+                <intervalHeaders>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    type="{type}">
+                  </unified:CalendarAppointment>
+                </intervalHeaders>
+              </PlanningCalendarRow>
+            </rows>
+            <specialDates>
+              <unified:DateTypeRange startDate="{start}"
+                endDate="{end}" type="{type}">
+              </unified:DateTypeRange>
+            </specialDates>
+          </PlanningCalendar>
+          </content>
+          </Panel>
+
+          <Panel expandable="true" expanded="false" width="auto" class="sapUiResponsiveMargin">
+          <headerToolbar>
+            <Toolbar height="3rem">
+              <Title text="DRAW" />
+              <ToolbarSpacer />
+              <Title text="" titleStyle="H5" id="IDdrawdate"/>
+              <ToolbarSpacer />
+              <ToggleButton pressed="{path: 'stateModel>/legendShown'}"
+                  icon="sap-icon://legend" tooltip="Legend" />
+            </Toolbar>
+          </headerToolbar>
+          <content>
+          <PlanningCalendar id="PC3"  appointmentSelect="onAppointmentSelect"
+            class="sapMPlanCalSuppressAlternatingRowColors clsFirstRowWidth"
+            startDate="{path: '/startDate3'}" rows="{path: '/people3'}"
+            appointmentsVisualization="Filled" showEmptyIntervalHeaders="false"
+            viewChange="handleViewChange" legend="PlanningCalendarLegend"
+            specialDates="{path: '/specialDates', templateShareable: 'true'}">
+            <toolbarContent>
+              <!-- <Title text="DRAW" titleStyle="H4" />
+              <ToolbarSpacer />
+              <Title text="" titleStyle="H5" id="IDdrawdate"/>
+              <ToolbarSpacer />
+              <ToggleButton pressed="{path: 'stateModel>/legendShown'}"
+                icon="sap-icon://legend" /> -->
+            </toolbarContent>
+            <rows>
+              <PlanningCalendarRow icon="{pic}" title="{name}"
+                text="{role}" specialDates="{path : 'specialDates', templateShareable: 'true'}"
+                appointments="{path : 'appointments', templateShareable: 'true'}"
+                intervalHeaders="{path: 'headers', templateShareable: 'true'}">
+                <specialDates>
+                  <unified:DateTypeRange startDate="{start}"
+                    endDate="{end}" type="{type}" />
+                </specialDates>
+                <appointments>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    text="{info}" color="{color}" tentative="{tentative}" tooltip="{title}">
+                  </unified:CalendarAppointment>
+                </appointments>
+                <intervalHeaders>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    type="{type}">
+                  </unified:CalendarAppointment>
+                </intervalHeaders>
+              </PlanningCalendarRow>
+            </rows>
+            <specialDates>
+              <unified:DateTypeRange startDate="{start}"
+                endDate="{end}" type="{type}">
+              </unified:DateTypeRange>
+            </specialDates>
+          </PlanningCalendar>
+          </content>
+          </Panel>
+        </VBox>
+      </l:mainContent>
+      <l:sideContent width="200px">
+        <PlanningCalendarLegend id="PlanningCalendarLegend"
+          items="{path : '/legendItems', templateShareable: 'true'}"
+          appointmentItems="{path : '/legendAppointmentItems', templateShareable: 'true'}"
+          standardItems="Today,Selected,NonWorkingDay">
+          <items>
+            <unified:CalendarLegendItem text="{text}"
+              color="{color}" tooltip="{text}" />
+          </items>
+          <appointmentItems>
+            <unified:CalendarLegendItem text="{text}"
+              type="{type}" tooltip="{text}" />
+          </appointmentItems>
+        </PlanningCalendarLegend>
+      </l:sideContent>
+    </l:DynamicSideContent>
+  </Page>
+</mvc:View>

@@ -1,0 +1,26 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+			confirm="handleConfirmBin" id="IDbinDialog">
+		<customTabs>
+			<ViewSettingsCustomTab title="">
+				<content>
+					<Panel height="150px">
+						<content>
+						<Label text="Bin/Oven" design="Bold" required="true"/>
+						<Input
+							id="IDbin"
+							type="Text"
+							class="sapUiSmallMarginBottom"
+							placeholder="Enter Bin / Oven ..."
+							showSuggestion="false"
+							showValueHelp="true"
+							valueHelpRequest="handlevaluehelpBin"/>
+						</content>
+					</Panel>
+				</content>
+			</ViewSettingsCustomTab>
+		</customTabs>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.5"
+metadata:
+  name: ey.meg.root
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+  - name: ui5-task-nwabap-deployer
+    afterTask: generateVersionInfo
+    configuration: 
+      resources:
+        pattern: "**/*.*"
+      connection:
+        server: https://10.223.0.137:8443
+        client: 100
+        useStrictSSL: false
+      ui5:
+        language: EN
+        package: ZMEG_FIORI
+        bspContainer: Zhtsappv1
+        bspContainerText: HTS Fiori App
+        transportNo: DESK9A0Z5V
+        calculateApplicationIndex: true    

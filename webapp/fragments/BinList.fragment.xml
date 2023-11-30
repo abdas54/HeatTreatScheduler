@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="IDbinlistDialog"
+		noDataText="No Bins Found"
+		title="Select Bin/Oven"
+		search="handleSearchBinList"
+		confirm="handleCloseBinList"
+		cancel="handleCloseBinList"
+		items="{/bin}">
+		<StandardListItem
+			id="IDbinList"
+			title="{name}"
+			description="{operation}"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

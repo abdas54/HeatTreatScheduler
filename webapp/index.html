@@ -1,0 +1,86 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Heat Treat Scheduler</title>
+    <style>
+        html, body, body > div, #container, #container-uiarea {
+            height: 100%;
+        }
+    </style>
+    <script
+        id="sap-ui-bootstrap"
+        src="https://sapui5.hana.ondemand.com/1.120.0/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_belize"
+        data-sap-ui-resourceroots='{
+            "ey.meg.root": "./"
+        }'
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-frameOptions="trusted"
+    ></script>
+    <script id="locate-reuse-libs" src="./utils/locate-reuse-libs.js"
+        data-sap-ui-manifest-uri="./manifest.json"
+        data-sap-ui-componentName="ey.meg.root">
+    </script> 
+</head>
+<body class="sapUiBody sapUiSizeCompact" id="content">
+    <div
+        data-sap-ui-component
+        data-name="ey.meg.root"
+        data-id="container"
+        data-settings='{"id" : "ey.meg.root"}'
+        data-handle-validation="true"
+    ></div>
+</body>
+</html> -->
+
+
+<!DOCTYPE HTML>
+<html>
+
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+
+    <title>Heat Treat Schedule</title>
+    <!-- <link rel="stylesheet" href="../zhtsappv1/css/style.css"/> -->
+    <script id="sap-ui-bootstrap"
+      src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+      data-sap-ui-libs="sap.m"
+      data-sap-ui-theme="sap_belize"
+      data-sap-ui-xx-bindingSyntax="complex"
+      data-sap-ui-preload="async"
+      data-sap-ui-compatVersion="edge"
+      data-sap-ui-resourceroots='{"ey.meg.root": "./"}'>
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script>
+      sap.ui.getCore().attachInit(function() {
+
+        new sap.m.App ({
+          pages : [
+            new sap.m.Page({
+              showHeader: false,
+              enableScrolling : false,
+              content : [
+                new sap.ui.core.ComponentContainer({
+                  width : "100%",
+                  height : "100%", name : "ey.meg.root",
+                  settings : {
+                    id : "ey.meg.root"
+                  }
+                })
+              ]
+            })
+          ]
+        }).placeAt("content");
+      });
+    </script>
+  </head>
+  <body class="sapUiBody" id="content" role="application">
+  </body>
+
+</html>

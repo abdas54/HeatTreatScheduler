@@ -1,0 +1,111 @@
+<mvc:View controllerName="ey.meg.root.controller.Table" xmlns="sap.ui.table"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core"
+	xmlns:m="sap.m" height="100%">
+	<m:Page showHeader="true" enableScrolling="false" class="sapUiContentPadding"
+		showNavButton="true" navButtonPress="onBack" floatingFooter="true"
+		title="Heat Treat Schedule">
+		<m:content>
+			<Table id="IDtableTrayDetails" rows="{/NewTrayDetails}" title="Schedule Details"
+				selectionMode="Multiple" visibleRowCount="10" rowSelectionChange="onRowSelect">
+				<columns>
+					<Column width="144px">
+						<m:Label text="Warehouse Number" />
+						<template>
+							<m:Text text="{WarehouseNumber}" wrapping="false" />
+						</template>
+					</Column>
+					<Column width="112px">
+						<m:Label text="Material" />
+						<template>
+							<m:Text text="{Material}" wrapping="false" />
+						</template>
+					</Column>
+					<Column width="75px">
+						<m:Label text="Batch" />
+						<template>
+							<m:Label text="{Batch}" />
+						</template>
+					</Column>
+					<Column width="173px">
+						<m:Label text="Special Stock Number" />
+						<template>
+							<m:Label text="{SpecialStockNumber}" />
+						</template>
+					</Column>
+					<Column width="104px">
+						<m:Label text="Storage Type" />
+						<template>
+							<m:Label text="{StorageType}" />
+						</template>
+					</Column>
+					<Column width="104px">
+						<m:Label text="Storage Bin" />
+						<template>
+							<m:Label text="{StorageBin}" />
+						</template>
+					</Column>
+					<Column width="65px">
+						<m:Label text="Weight" />
+						<template>
+							<m:Label text="{Weight}" />
+						</template>
+					</Column>
+					<Column width="114px">
+						<m:Label text="Storage Unit" />
+						<template>
+							<m:Label text="{StorageUnit}" />
+						</template>
+					</Column>
+					<Column width="7rem">
+						<m:Label text="Ship Date" />
+						<template>
+							<m:Label text="{path: 'ShipDate', formatter: '.formatter.date'}" />
+						</template>
+					</Column>
+					<Column width="65px">
+						<m:Label text="Priority" />
+						<template>
+							<m:Label text="{Priority}" />
+						</template>
+					</Column>
+					<Column width="80px" hAlign="Center">
+						<m:Label text="Tray Type" />
+						<template>
+							<m:Label text="{TrayType}" />
+						</template>
+					</Column>
+					<Column width="79px" hAlign="Center">
+						<m:Label text="Tray Size" />
+						<template>
+							<m:Label text="{TraySize}" />
+						</template>
+					</Column>
+					<Column width="84px" hAlign="Center">
+						<m:Label text="High Code" />
+						<template>
+							<m:Label text="{HighCode}" />
+						</template>
+					</Column>
+					<Column width="105px" hAlign="Center">
+						<m:Label text="Quench Code" />
+						<template>
+							<m:Label text="{QuenchCode}" />
+						</template>
+					</Column>
+					<Column width="86px" hAlign="Center">
+						<m:Label text="Low Code" />
+						<template>
+							<m:Label text="{LowCode}" />
+						</template>
+					</Column>
+				</columns>
+			</Table>
+		</m:content>
+		<m:footer>
+			<m:OverflowToolbar>
+				<m:ToolbarSpacer/>
+				<m:Button text="Schedule Selected Trays" press="onScheduleSelected"/>
+			</m:OverflowToolbar>
+		</m:footer>
+	</m:Page>
+</mvc:View>

@@ -1,0 +1,26 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+			confirm="handleConfirmWarehouse" id="IDwarehouseDialog">
+		<customTabs>
+			<ViewSettingsCustomTab title="">
+				<content>
+					<Panel height="150px">
+						<content>
+						<Label text="Warehouse Number" design="Bold" required="true"/>
+						<Input
+							id="IDwarehouse"
+							type="Text"
+							class="sapUiSmallMarginBottom"
+							placeholder="Enter Warehouse Number ..."
+							showSuggestion="false"
+							showValueHelp="true"
+							valueHelpRequest="handlevaluehelpWarehouse"/>
+						</content>
+					</Panel>
+				</content>
+			</ViewSettingsCustomTab>
+		</customTabs>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

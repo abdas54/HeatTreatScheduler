@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="IDwarehouselistDialog"
+		noDataText="No Warehouse Found"
+		title="Select Warehouse"
+		search="handleSearchWarehouseList"
+		confirm="handleCloseWarehouseList"
+		cancel="handleCloseWarehouseList"
+		items="{
+			path: '/HTSWarehouseSearchSet'
+		}" >
+		<StandardListItem
+			id="IDwarehouselist"
+			title="{Warehouse}"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

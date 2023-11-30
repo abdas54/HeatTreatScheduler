@@ -1,0 +1,154 @@
+{
+  "_version": "1.45.0",
+  "sap.app": {
+    "id": "ey.meg.root",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.7.4",
+      "toolsId": "a7649b7d-a5c7-4a23-9aa7-e34592cf6e00"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "moveTrayDataService": {
+        "uri": "model/moveTrayData.json",
+        "type": "JSON"
+    }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.120.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "ey.meg.root.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      },
+      "moveTrayDataService": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "moveTrayDataService"
+    }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "ey.meg.root.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "page1",
+          "pattern": "",
+          "target": "page1"
+        },
+        {
+          "name": "page2",
+          "pattern": "Page 2",
+          "target": "page2"
+        },
+        {
+          "name": "page3",
+          "pattern": "Page 3",
+          "target": "page3"
+        }
+      ],
+      "targets": {
+        "page1": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Selection",
+          "viewName": "Selection",
+          "viewLevel": 0
+        },
+        "page2": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Home",
+          "viewName": "Home",
+          "viewLevel": 1
+        },
+        "page3": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Table",
+          "viewName": "Table",
+          "viewLevel": 2
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "ey.meg.root.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

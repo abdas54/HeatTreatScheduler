@@ -1,0 +1,92 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:semantic="sap.m.semantic"
+    xmlns:ui="sap.ca.ui"
+>
+    <Dialog
+        contentHeight="auto"
+        contentWidth="auto"
+        title="Move Tray"
+        class="sapUiSizeCompact"
+    >
+        <endButton>
+            <Button
+                text="Close"
+                press="onCloseMoveTray"
+            />
+        </endButton>
+        <beginButton>
+            <Button
+                text="Move Tray"
+                press="handleMoveTray"
+            />
+        </beginButton>
+        <content>
+        <VBox>
+            <f:SimpleForm
+                class="formHiddenTitle"
+                editable="true"
+                layout="ColumnLayout"
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="12"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="2"
+                columnsL="2"
+                columnsM="1"
+            >
+            <core:Title class="" text=""/>
+            <Label text="Start High"/>
+			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'MoveTrayModel>/startHigh', type: 'sap.ui.model.odata.type.Time' }"/>
+            <Label text="Finish High"/>
+			<TimePicker valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'MoveTrayModel>/finishHigh', type: 'sap.ui.model.odata.type.Time' }"/>
+            <Label text="FB"/>
+			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'MoveTrayModel>/fb', type: 'sap.ui.model.odata.type.Time' }"/>
+            
+            <Label text="Operator Initials"/>
+			<Input value="{MoveTrayModel>/operatorInitials}"/>
+            <Label text="Notes"/>
+            <TextArea value="{MoveTrayModel>/notes}"></TextArea>
+            <core:Title class="" text=""/>
+            <Label text="Start Low"/>
+			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'MoveTrayModel>/startLow', type: 'sap.ui.model.odata.type.Time' }"/>
+            <Label text="Finish Low"/>
+			<TimePicker valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'MoveTrayModel>/finishLow', type: 'sap.ui.model.odata.type.Time' }"/>
+            <Label text="SAC"/>
+			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'MoveTrayModel>/sac', type: 'sap.ui.model.odata.type.Time' }"/>
+            <Label text=""/>
+            <Text text=""/>
+            <Label text="Destination" />
+            <ComboBox
+					showSecondaryValues= "false"
+					filterSecondaryValues= "false"
+					items="{
+						path: 'DestinationBinModel>/DestinationSet'
+						
+					}">
+					<core:ListItem key="{DestinationBinModel>Lgpla}" text="{DestinationBinModel>Lgpla}" additionalText="{DestinationBinModel>Lgpla}"/>
+				</ComboBox>
+            
+
+            
+            <f:content />
+            </f:SimpleForm>
+            </VBox>
+           
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

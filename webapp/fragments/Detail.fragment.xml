@@ -1,0 +1,56 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+  <Dialog
+      title="Tray Detail"
+      class="sapUiSizeCompact">
+    <endButton>
+      <Button text="Close" press="onCloseDetail"/>
+    </endButton>
+    <beginButton>
+    <Button text="Move Tray" press="onPressMoveTray"/>
+    </beginButton>
+    <content>
+      <Table id="leaveRequestTable"  fixedLayout="false" 	inset="false" items="{ path: '/BINTRAYDETAILSet' }" >
+        <headerToolbar>
+          <Toolbar>
+          <Title text="Tray Detail List" level="H2"/>
+            <ToolbarSpacer/>
+          </Toolbar>
+        </headerToolbar>
+        <columns>
+          <Column width="8em">
+            <Text text="Tray Number"/>
+          </Column>
+          <Column width="auto">
+            <Text text="Material Number"/>
+          </Column>
+          <Column width="auto">
+            <Text text="Batch Number"/>
+          </Column>
+          <Column width="auto">
+            <Text text="High Temp Code"/>
+          </Column>
+          <Column width="auto">
+            <Text text="Quench Code"/>
+          </Column>
+          <Column width="auto">
+            <Text text="Low Temp Code"/>
+          </Column>
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <Text text="{Lenum}" />
+              <Text text="{Matnr}" />
+              <Text text="{Charg}" />
+              <Text text="{Zhtcode}" />
+              <Text text="{Zqcode}" />
+              <Text text="{Zltcode}" />
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,65 @@
+div#IDwarehouseDialog-dialog {
+    height: 160px !important;
+}
+section#IDwarehouseDialog-page1-cont {
+    overflow: hidden !important;
+}
+div#IDbinDialog-dialog {
+    height: 160px !important;
+}
+section#IDbinDialog-page1-cont {
+    overflow: hidden !important;
+}
+div#__xmlview2--PC1-HeaderToolbar {
+    height: 0px !important;
+}
+div#__xmlview2--PC2-HeaderToolbar {
+    height: 0px;
+}
+div#__xmlview2--PC3-HeaderToolbar {
+    height: 0px;
+}
+button#__xmlview2--PC1-TimeInt--Head-next {
+    margin-right: 300px !important;
+}
+button#__xmlview2--PC2-TimeInt--Head-next {
+    margin-right: 300px !important;
+}
+button#__xmlview2--PC3-TimeInt--Head-next {
+    margin-right: 300px !important;
+}
+.MarginLeftCls {
+  margin-left: 30px !important;
+}
+div#__xmlview1--idWarehouseSelection--Form--Grid {
+    margin-top: 60px !important;
+    margin-left: 450px;
+}
+div#__xmlview2--PC1-CalHead {
+    height: 0px !important;
+}
+div#__xmlview2--PC2-CalHead {
+    height: 0px !important;
+}
+div#__xmlview2--PC3-CalHead {
+    height: 0px !important;
+}
+div#__xmlview2--IDquenchdate {
+    margin-left: -25px !important;
+}
+.HeaderClass{
+  position: fixed !important;
+  z-index: 10 !important;
+}
+.VboxClass{
+  margin-top: 20px !important;
+}
+div#__xmlview2--PlanningCalendarLegend {
+    margin-top: 30px !important;
+}
+div#__xmlview1--IDwarehouse-content {
+    width: 350px !important;
+}
+.formHiddenTitle .sapUiFormContainerTitle .sapUiFormTitle{
+    display:none;
+}
