@@ -669,23 +669,55 @@ sap.ui.define([
     onCloseDetail: function (oEvent) {
       this._oDetailDialog.close();
     },
-    onPressMoveTray: function(oEvent){
+    onPressMoveTray: function (oEvent) {
       var that = this;
+      var selectedItem = sap.ui.getCore().byId("leaveRequestTable").getSelectedItems();
       this.getDestinationBins();
       this._moveTrayDialog = null;
-			this._moveTrayDialog = sap.ui.xmlfragment(
-				"ey.meg.root.fragments.MoveTray",
-				this);
+      if (selectedItem.length > 0){
+      this._moveTrayDialog = sap.ui.xmlfragment(
+        "ey.meg.root.fragments.MoveTray",
+        this);
       this.getView().addDependent(this._moveTrayDialog);
       this._moveTrayDialog.open();
-    },
-    handleMoveTray: function(oEvent){
+      }
+      else{
+        sap.m.MessageBox.error("Kindly select Tray to Move");
+      }
 
     },
-    onCloseMoveTray: function(oEvent){
+    handleMoveTray: function (oEvent) {
+      var selectedItem = sap.ui.getCore().byId("leaveRequestTable").getSelectedItems();
+      var requestPayload = this.getOwnerComponent().getModel("moveTrayDataService").getData();
+      var sURL = "/sap/opu/odata/SAP/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/";
+      var oModel1 = new sap.ui.model.odata.v2.ODataModel(sURL, true);
+      oModel1.setUseBatch(true);
+
+      if (selectedItem.length > 0) {
+        for (var count = 0; count < selectedItem.length; count++) {
+          requestPayload.Traynumber = selectedItem[count].Lenum;
+          requestPayload.Material = selectedItem[count].Matnr;
+          oModel1.create("/TodetailsSet", {
+            success: function (oData, oResponse) {
+              
+            },
+            error: function (oError) {
+
+            }
+          });
+
+        }
+      }
+      else{
+        sap.m.MessageBox.error("Kindly select Tray to Move");
+      }
+
+
+    },
+    onCloseMoveTray: function (oEvent) {
       this._moveTrayDialog.close();
     },
-    getDestinationBins: function(){
+    getDestinationBins: function () {
       var that = this;
       var sURL = "/sap/opu/odata/SAP/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/";
       var oModel1 = new sap.ui.model.odata.v2.ODataModel(sURL, true);
@@ -693,12 +725,12 @@ sap.ui.define([
       oModel1.read("/StorageTypeSet", {
         filters: [oFilter],
         success: function (oData, oResponse) {
-         var jsonModel = new JSONModel;
-         jsonModel.setData({"DestinationSet" : oData.results});
-         that.getOwnerComponent().setModel(jsonModel, "DestinationBinModel");
+          var jsonModel = new JSONModel;
+          jsonModel.setData({ "DestinationSet": oData.results });
+          that.getOwnerComponent().setModel(jsonModel, "DestinationBinModel");
         },
         error: function (oError) {
-          
+
         }
       });
     },

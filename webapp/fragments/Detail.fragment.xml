@@ -11,7 +11,7 @@
     <Button text="Move Tray" press="onPressMoveTray"/>
     </beginButton>
     <content>
-      <Table id="leaveRequestTable"  fixedLayout="false" 	inset="false" items="{ path: '/BINTRAYDETAILSet' }" >
+      <Table id="leaveRequestTable"  fixedLayout="false" mode="MultiSelect"	inset="false" items="{ path: '/BINTRAYDETAILSet' }" >
         <headerToolbar>
           <Toolbar>
           <Title text="Tray Detail List" level="H2"/>

@@ -46,28 +46,28 @@
             <core:Title class="" text=""/>
             <Label text="Start High"/>
 			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'MoveTrayModel>/startHigh', type: 'sap.ui.model.odata.type.Time' }"/>
+            value="{ path: 'moveTrayDataService>/startHigh', type: 'sap.ui.model.odata.type.Time' }"/>
             <Label text="Finish High"/>
 			<TimePicker valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'MoveTrayModel>/finishHigh', type: 'sap.ui.model.odata.type.Time' }"/>
+            value="{ path: 'moveTrayDataService>/finishHigh', type: 'sap.ui.model.odata.type.Time' }"/>
             <Label text="FB"/>
 			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'MoveTrayModel>/fb', type: 'sap.ui.model.odata.type.Time' }"/>
+            value="{ path: 'moveTrayDataService>/fb', type: 'sap.ui.model.odata.type.Time' }"/>
             
             <Label text="Operator Initials"/>
-			<Input value="{MoveTrayModel>/operatorInitials}"/>
+			<Input value="{moveTrayDataService>/operatorInitials}"/>
             <Label text="Notes"/>
-            <TextArea value="{MoveTrayModel>/notes}"></TextArea>
+            <TextArea value="{moveTrayDataService>/notes}"></TextArea>
             <core:Title class="" text=""/>
             <Label text="Start Low"/>
 			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'MoveTrayModel>/startLow', type: 'sap.ui.model.odata.type.Time' }"/>
+            value="{ path: 'moveTrayDataService>/startLow', type: 'sap.ui.model.odata.type.Time' }"/>
             <Label text="Finish Low"/>
 			<TimePicker valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'MoveTrayModel>/finishLow', type: 'sap.ui.model.odata.type.Time' }"/>
+            value="{ path: 'moveTrayDataService>/finishLow', type: 'sap.ui.model.odata.type.Time' }"/>
             <Label text="SAC"/>
 			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'MoveTrayModel>/sac', type: 'sap.ui.model.odata.type.Time' }"/>
+            value="{ path: 'moveTrayDataService>/sac', type: 'sap.ui.model.odata.type.Time' }"/>
             <Label text=""/>
             <Text text=""/>
             <Label text="Destination" />
