@@ -1,10 +1,13 @@
 {
-	"startHigh": "",
-	"finishHigh": "",
-	"fb": "",
-    "operatorInitials" : "",
-    "startLow" : "",
-    "finishLow" : "",
-    "sac" : "",
-    "notes" : ""
+	"Starthigh": "",
+	"Finishhigh": "",
+	"Fb": "",
+    "Opinitial" : "",
+    "Startlow" : "",
+    "Finishlow" : "",
+    "Sac" : "",
+    "Note" : "",
+    "storageBin": "",
+    "storageType": "",
+    "CreatedAt": null
 }

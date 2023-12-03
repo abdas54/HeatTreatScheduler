@@ -686,27 +686,33 @@ sap.ui.define([
       }
 
     },
+    onSelectStorageBin: function(oEvent){
+      var moveTrayData = this.getOwnerComponent().getModel("moveTrayDataService");
+      var selectedStorageType= oEvent.getParameter("selectedItem").getProperty("additionalText");
+      moveTrayData.setProperty("/storageType",selectedStorageType);
+    },
     handleMoveTray: function (oEvent) {
       var selectedItem = sap.ui.getCore().byId("leaveRequestTable").getSelectedItems();
       var requestPayload = this.getOwnerComponent().getModel("moveTrayDataService").getData();
       var sURL = "/sap/opu/odata/SAP/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/";
       var oModel1 = new sap.ui.model.odata.v2.ODataModel(sURL, true);
       oModel1.setUseBatch(true);
+      oModel1.setDeferredGroups(["group1"]);
+      var mParameters = {
+                  groupId:"group1",
+                  success:function(odata, resp){
+                     console.log(resp); },
+                  error: function(odata, resp){
+                     console.log(resp); }};
 
       if (selectedItem.length > 0) {
         for (var count = 0; count < selectedItem.length; count++) {
-          requestPayload.Traynumber = selectedItem[count].Lenum;
-          requestPayload.Material = selectedItem[count].Matnr;
-          oModel1.create("/TodetailsSet", {
-            success: function (oData, oResponse) {
-              
-            },
-            error: function (oError) {
-
-            }
-          });
-
+          var itemData = selectedItem[count].getBindingContext().getObject();
+          requestPayload.Traynumber = itemData.Lenum;
+          requestPayload.Material = itemData.Matnr;
+          oModel1.create("/TodetailsSet",requestPayload,mParameters);
         }
+        oModel1.submitChanges(mParameters);
       }
       else{
         sap.m.MessageBox.error("Kindly select Tray to Move");
