@@ -45,14 +45,14 @@
             >
             <core:Title class="" text=""/>
             <Label text="Start High"/>
-			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Starthigh', type: 'sap.ui.model.odata.type.Time' }"/>
+			<TimePicker  showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'moveTrayDataService>/Starthigh'}"/>
             <Label text="Finish High"/>
-			<TimePicker valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Finishhigh', type: 'sap.ui.model.odata.type.Time' }"/>
+			<TimePicker showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'moveTrayDataService>/Finishhigh'}"/>
             <Label text="FB"/>
-			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Fb', type: 'sap.ui.model.odata.type.Time' }"/>
+			<TimePicker showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'moveTrayDataService>/Fb'}"/>
             
             <Label text="Operator Initials"/>
 			<Input value="{moveTrayDataService>/Opinitial}"/>
@@ -60,21 +60,21 @@
             <TextArea value="{moveTrayDataService>/Note}"></TextArea>
             <core:Title class="" text=""/>
             <Label text="Start Low"/>
-			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Startlow', type: 'sap.ui.model.odata.type.Time' }"/>
+			<TimePicker  showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'moveTrayDataService>/Startlow'}"/>
             <Label text="Finish Low"/>
-			<TimePicker valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Finishlow', type: 'sap.ui.model.odata.type.Time' }"/>
+			<TimePicker showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'moveTrayDataService>/Finishlow'}"/>
             <Label text="SAC"/>
-			<TimePicker  valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Sac', type: 'sap.ui.model.odata.type.Time' }"/>
+			<TimePicker  showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
+            value="{ path: 'moveTrayDataService>/Sac'}"/>
             <Label text=""/>
             <Text text=""/>
             <Label text="Destination" />
             <ComboBox
 					showSecondaryValues= "true"
 					filterSecondaryValues= "true"
-                    selectedKey="{moveTrayDataService>/storageBin}"
+                    selectedKey="{moveTrayDataService>/Destinationbin}"
                     selectionChange="onSelectStorageBin"
 					items="{
 						path: 'DestinationBinModel>/DestinationSet'

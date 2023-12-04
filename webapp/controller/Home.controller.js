@@ -674,49 +674,93 @@ sap.ui.define([
       var selectedItem = sap.ui.getCore().byId("leaveRequestTable").getSelectedItems();
       this.getDestinationBins();
       this._moveTrayDialog = null;
-      if (selectedItem.length > 0){
+
       this._moveTrayDialog = sap.ui.xmlfragment(
         "ey.meg.root.fragments.MoveTray",
         this);
       this.getView().addDependent(this._moveTrayDialog);
       this._moveTrayDialog.open();
-      }
-      else{
-        sap.m.MessageBox.error("Kindly select Tray to Move");
-      }
+
+
 
     },
-    onSelectStorageBin: function(oEvent){
+    onSelectStorageBin: function (oEvent) {
       var moveTrayData = this.getOwnerComponent().getModel("moveTrayDataService");
-      var selectedStorageType= oEvent.getParameter("selectedItem").getProperty("additionalText");
-      moveTrayData.setProperty("/storageType",selectedStorageType);
+      var selectedStorageType = oEvent.getParameter("selectedItem").getProperty("additionalText");
+      moveTrayData.setProperty("/Storagetype", selectedStorageType);
     },
     handleMoveTray: function (oEvent) {
-      var selectedItem = sap.ui.getCore().byId("leaveRequestTable").getSelectedItems();
-      var requestPayload = this.getOwnerComponent().getModel("moveTrayDataService").getData();
+      var that = this;
+      var tableItems = sap.ui.getCore().byId("leaveRequestTable").getItems();
+      var requestPayload = {
+        "N_todetails": []
+      };
+      var moveTrayData = this.getOwnerComponent().getModel("moveTrayDataService").getData();
       var sURL = "/sap/opu/odata/SAP/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/";
       var oModel1 = new sap.ui.model.odata.v2.ODataModel(sURL, true);
-      oModel1.setUseBatch(true);
-      oModel1.setDeferredGroups(["group1"]);
-      var mParameters = {
-                  groupId:"group1",
-                  success:function(odata, resp){
-                     console.log(resp); },
-                  error: function(odata, resp){
-                     console.log(resp); }};
+      oModel1.setUseBatch(false);
+      // oModel1.setDeferredGroups(["group1"]);
+      // var mParameters = {
+      //             groupId:"group1",
+      //             success:function(odata, resp){
+      //                console.log(resp); },
+      //             error: function(odata, resp){
+      //                console.log(resp); }};
 
-      if (selectedItem.length > 0) {
-        for (var count = 0; count < selectedItem.length; count++) {
-          var itemData = selectedItem[count].getBindingContext().getObject();
-          requestPayload.Traynumber = itemData.Lenum;
-          requestPayload.Material = itemData.Matnr;
-          oModel1.create("/TodetailsSet",requestPayload,mParameters);
+      if (tableItems.length > 0) {
+        for (var count = 0; count < tableItems.length; count++) {
+          var itemData = tableItems[count].getBindingContext().getObject();
+          var oDataObject = {
+            "Traynumber": itemData.Lenum,
+            "Material": itemData.Matnr,
+            "Serialnumber": itemData.Charg,
+            "Starthigh": this.convertTimeStamp(moveTrayData.Starthigh),
+            "Finishhigh": this.convertTimeStamp(moveTrayData.Finishhigh),
+            "Startlow": this.convertTimeStamp(moveTrayData.Startlow),
+            "Finishlow": this.convertTimeStamp(moveTrayData.Finishlow),
+            "Sac": this.convertTimeStamp(moveTrayData.Sac),
+            "Fb": this.convertTimeStamp(moveTrayData.Fb),
+          }
+
+          requestPayload.N_todetails.push(oDataObject);
+          // oModel1.create("/TodetailsSet",requestPayload,mParameters);
         }
-        oModel1.submitChanges(mParameters);
+        // oModel1.submitChanges(mParameters);
+        oModel1.create("/TodetailsSet", requestPayload, {
+          success: function (oRes) {
+            that._moveTrayDialog.getEndButton().firePress();
+            that.onCloseMoveTray();
+            sap.m.MessageToast.show("Tray has been successfully moved");
+            console.log(oRes);
+            that._moveTrayDialog.close();
+            that.resetMoveTrayData();
+
+          },
+          error: function (oError) {
+            console.log(oError);
+          }
+        });
       }
-      else{
-        sap.m.MessageBox.error("Kindly select Tray to Move");
+      else {
+        sap.m.MessageBox.error("No Details are there to Move");
       }
+
+
+    },
+    resetMoveTrayData: function () {
+      var moveTrayData = this.getOwnerComponent().getModel("moveTrayDataService").getData();
+
+      moveTrayData.Starthigh = "";
+      moveTrayData.Finishhigh = "";
+      moveTrayData.Fb = "";
+      moveTrayData.Opinitial = "";
+      moveTrayData.Startlow = "";
+      moveTrayData.Finishlow = "";
+      moveTrayData.Sac = "";
+      moveTrayData.Note = "";
+      moveTrayData.Destinationbin = "";
+      moveTrayData.Storagetype = "";
+
 
 
     },
@@ -739,6 +783,19 @@ sap.ui.define([
 
         }
       });
+    },
+    convertTimeStamp: function (value) {
+      var defaultValue = "";
+
+      if ((value === undefined) || (value === null) || (value === "PTHundefinedMundefinedS") || (value === "")) {
+        defaultValue = "PT00H00M00S";
+      }
+      else {
+        var time = value.toString().split(":");
+        defaultValue = "PT" + time[0] + "H" + time[1] + "M" + time[2] + "S";
+
+      }
+      return defaultValue;
     },
     //<<< end of change++ :Nathan Wang Date:2019.8.12 CR:DESK998794 OTRS:9901453
     //<<< Start Changed By Summer Li Date:2020.03.02 CR: DESK9A03WE OTRS:9901543
