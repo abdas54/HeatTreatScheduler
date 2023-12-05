@@ -720,6 +720,10 @@ sap.ui.define([
             "Finishlow": this.convertTimeStamp(moveTrayData.Finishlow),
             "Sac": this.convertTimeStamp(moveTrayData.Sac),
             "Fb": this.convertTimeStamp(moveTrayData.Fb),
+            "Destinationbin": moveTrayData.Destinationbin,
+            "Storagetype" : moveTrayData.Storagetype,
+            "Opinitial" : moveTrayData.Opinitial,
+            "Note" : moveTrayData.Note
           }
 
           requestPayload.N_todetails.push(oDataObject);
