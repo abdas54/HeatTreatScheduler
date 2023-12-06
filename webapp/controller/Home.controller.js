@@ -640,6 +640,7 @@ sap.ui.define([
     //>>> start of change++ :Nathan Wang Date:2019.8.12 CR:DESK998794 OTRS:9901453
     //Description:Display tray datail
     onAppointmentSelect: function (oEvent) {
+    
       var oAppointment = oEvent.getParameter("appointment"),
         oBindingContext,
         sURL = "/sap/opu/odata/SAP/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/",
@@ -661,9 +662,33 @@ sap.ui.define([
         for (var i = 0; i < aLenum.length; i++) {
           aFilters.push(new Filter("Lenum", sap.ui.model.FilterOperator.EQ, aLenum[i]));
         }
+        var oTable = sap.ui.getCore().byId("leaveRequestTable");
+        oTable._getSelectAllCheckbox().setVisible(false);
         this._oDetailDialog.getContent()[0].getBinding("items").filter(aFilters);
         //Open Dialog
         this._oDetailDialog.open();
+      }
+    },
+    handleSelectItem: function(oEvent){
+      var itemChecked = oEvent.getParameter("selected");
+      var selectedTrayNumber = oEvent.getParameter("listItem").getAggregation("cells")[0].getProperty("text");
+      var oTable = sap.ui.getCore().byId("leaveRequestTable");
+
+      for(var count =0 ; count < oTable.getItems().length ; count++){
+          var getItemTrayNum = oTable.getItems()[count].getCells()[0].getText();
+        if(selectedTrayNumber === getItemTrayNum){
+          oTable.getItems()[count].setSelected(itemChecked);
+        }
+      }
+      this.unSelectPrvItem(selectedTrayNumber,oTable);
+
+    },
+    unSelectPrvItem: function(trayNumber,oTable){
+      for(var count =0 ; count < oTable.getItems().length ; count++){
+          var getItemTrayNum = oTable.getItems()[count].getCells()[0].getText();
+        if(trayNumber !== getItemTrayNum){
+          oTable.getItems()[count].setSelected(false);
+        }
       }
     },
     onCloseDetail: function (oEvent) {
@@ -691,7 +716,7 @@ sap.ui.define([
     },
     handleMoveTray: function (oEvent) {
       var that = this;
-      var tableItems = sap.ui.getCore().byId("leaveRequestTable").getItems();
+      var tableItems = sap.ui.getCore().byId("leaveRequestTable").getSelectedItems();
       var requestPayload = {
         "N_todetails": []
       };
@@ -723,7 +748,8 @@ sap.ui.define([
             "Destinationbin": moveTrayData.Destinationbin,
             "Storagetype" : moveTrayData.Storagetype,
             "Opinitial" : moveTrayData.Opinitial,
-            "Note" : moveTrayData.Note
+            "Note" : moveTrayData.Note,
+            "Tonumber" : ""
           }
 
           requestPayload.N_todetails.push(oDataObject);
@@ -732,12 +758,15 @@ sap.ui.define([
         // oModel1.submitChanges(mParameters);
         oModel1.create("/TodetailsSet", requestPayload, {
           success: function (oRes) {
+            var transferOrderNumber = oRes.N_todetails.results[0].Tonumber;
             that._moveTrayDialog.getEndButton().firePress();
             that.onCloseMoveTray();
+            sap.m.MessageBox.success("Transfer Order has been done successfully with reference Number " + transferOrderNumber);
             sap.m.MessageToast.show("Tray has been successfully moved");
             console.log(oRes);
             that._moveTrayDialog.close();
             that.resetMoveTrayData();
+            that.onBeforeRendering();
 
           },
           error: function (oError) {
@@ -746,7 +775,7 @@ sap.ui.define([
         });
       }
       else {
-        sap.m.MessageBox.error("No Details are there to Move");
+        sap.m.MessageBox.error("Select Tray to Move");
       }
 
 
