@@ -55,7 +55,7 @@
             value="{ path: 'moveTrayDataService>/Fb'}"/>
             
             <Label text="Operator Initials"/>
-			<Input value="{moveTrayDataService>/Opinitial}"/>
+			<Input maxLength="12" value="{moveTrayDataService>/Opinitial}"/>
             <Label text="Notes"/>
             <TextArea value="{moveTrayDataService>/Note}"></TextArea>
             <core:Title class="" text=""/>

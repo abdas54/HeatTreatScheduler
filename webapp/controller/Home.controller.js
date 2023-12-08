@@ -664,6 +664,7 @@ sap.ui.define([
         }
         var oTable = sap.ui.getCore().byId("leaveRequestTable");
         oTable._getSelectAllCheckbox().setVisible(false);
+        this.unselectAllItem(oTable);
         this._oDetailDialog.getContent()[0].getBinding("items").filter(aFilters);
         //Open Dialog
         this._oDetailDialog.open();
@@ -690,6 +691,11 @@ sap.ui.define([
           oTable.getItems()[count].setSelected(false);
         }
       }
+    },
+    unselectAllItem: function(oTable){
+      for(var count =0 ; count < oTable.getItems().length ; count++){
+        oTable.getItems()[count].setSelected(false);
+    }
     },
     onCloseDetail: function (oEvent) {
       this._oDetailDialog.close();
@@ -749,6 +755,8 @@ sap.ui.define([
             "Storagetype" : moveTrayData.Storagetype,
             "Opinitial" : moveTrayData.Opinitial,
             "Note" : moveTrayData.Note,
+            "Tonumber" : "",
+            "CreatedAt" : null,
             "Tonumber" : ""
           }
 
@@ -829,6 +837,26 @@ sap.ui.define([
 
       }
       return defaultValue;
+    },
+    setLocalTimeZoneZone : function (datevalue) {
+
+      var dateTime = new Date(datevalue);
+      if (datevalue === null) {
+        return null;
+      }
+      else if (dateTime !== undefined && dateTime !== null && dateTime !== "") {
+        var offSet = dateTime.getTimezoneOffset();
+        var offSetVal = dateTime.getTimezoneOffset() / 60;
+        var h = Math.floor(Math.abs(offSetVal));
+        var m = Math.floor((Math.abs(offSetVal) * 60) % 60);
+        dateTime = new Date(dateTime.setHours(h, m, 0, 0));
+        return dateTime;
+      }
+      else {
+        return null;
+      }
+    
+    
     },
     //<<< end of change++ :Nathan Wang Date:2019.8.12 CR:DESK998794 OTRS:9901453
     //<<< Start Changed By Summer Li Date:2020.03.02 CR: DESK9A03WE OTRS:9901543
