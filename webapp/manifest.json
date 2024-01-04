@@ -28,7 +28,11 @@
       "moveTrayDataService": {
         "uri": "model/moveTrayData.json",
         "type": "JSON"
-    }
+      },
+      "visibilityModel": {
+        "uri": "model/visiblityData.json",
+        "type": "JSON"
+      }
     }
   },
   "sap.ui": {
@@ -81,7 +85,11 @@
       "moveTrayDataService": {
         "type": "sap.ui.model.json.JSONModel",
         "dataSource": "moveTrayDataService"
-    }
+      },
+      "visibilityModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "visibilityModel"
+      }
     },
     "resources": {
       "css": [

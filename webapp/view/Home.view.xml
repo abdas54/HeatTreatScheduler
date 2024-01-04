@@ -195,6 +195,63 @@
           </PlanningCalendar>
           </content>
           </Panel>
+
+        <Panel expandable="true" expanded="false" width="auto" class="sapUiResponsiveMargin">
+          <headerToolbar>
+            <Toolbar height="3rem">
+              <Title text="QUE/STAGE" />
+              <ToolbarSpacer />
+              <Title text="" titleStyle="H5" id="IDquedate"/>
+              <ToolbarSpacer />
+              <ToggleButton pressed="{path: 'stateModel>/legendShown'}"
+                  icon="sap-icon://legend" tooltip="Legend" />
+            </Toolbar>
+          </headerToolbar>
+          <content>
+          <PlanningCalendar id="PC4"  appointmentSelect="onAppointmentSelect"
+            class="sapMPlanCalSuppressAlternatingRowColors clsFirstRowWidth"
+            startDate="{path: '/startDate4'}" rows="{path: '/people4'}"
+            appointmentsVisualization="Filled" showEmptyIntervalHeaders="false"
+            viewChange="handleViewChange" legend="PlanningCalendarLegend"
+            specialDates="{path: '/specialDates', templateShareable: 'true'}">
+            
+            <rows>
+              <PlanningCalendarRow icon="{pic}" title="{name}"
+                text="{role}" specialDates="{path : 'specialDates', templateShareable: 'true'}"
+                appointments="{path : 'appointments', templateShareable: 'true'}"
+                intervalHeaders="{path: 'headers', templateShareable: 'true'}">
+                <specialDates>
+                  <unified:DateTypeRange startDate="{start}"
+                    endDate="{end}" type="{type}" />
+                </specialDates>
+                <appointments>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    text="{info}" color="{color}" tentative="{tentative}" tooltip="{title}">
+                  </unified:CalendarAppointment>
+                </appointments>
+                <intervalHeaders>
+                  <unified:CalendarAppointment
+                    startDate="{start}" endDate="{end}" icon="{pic}" title="{title}"
+                    type="{type}">
+                  </unified:CalendarAppointment>
+                </intervalHeaders>
+              </PlanningCalendarRow>
+            </rows>
+            <specialDates>
+              <unified:DateTypeRange startDate="{start}"
+                endDate="{end}" type="{type}">
+              </unified:DateTypeRange>
+            </specialDates>
+          </PlanningCalendar>
+          </content>
+          </Panel>
+
+
+
+
+
+
         </VBox>
       </l:mainContent>
       <l:sideContent width="200px">

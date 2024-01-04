@@ -16,9 +16,9 @@ sap.ui.define([
   "use strict";
   var oDataModel, sWarehouseTemp, oDataAdd;
   var sHour, sMinute, sAMPM, oModel, bAdd, bRefresh = false;
-  var aHigh = [], aQuench = [], aDraw = [], aBin = [], aLatestTime = [], aPlannedTrays = [];
-  var aHighNew = [], aQuenchNew = [], aDrawNew = []; var sWarehouse, sTitle;
-  var sStartHigh, sStartQuench, sStartDraw;
+  var aHigh = [], aQuench = [], aDraw = [], aBin = [], aLatestTime = [], aPlannedTrays = [],aQue=[];
+  var aHighNew = [], aQuenchNew = [], aDrawNew = [],aQueNew=[]; var sWarehouse, sTitle;
+  var sStartHigh, sStartQuench, sStartDraw,sQue;
   return Controller.extend("ey.meg.root.controller.Home", {
     _GetTime: function () {
       var oDate = new Date();
@@ -220,7 +220,7 @@ sap.ui.define([
         if (a.Operation == b.Operation) return a.Operation - b.Operation;
         return orderPriority.indexOf(a.Operation) - orderPriority.indexOf(b.Operation)
       });
-      aHigh = [], aQuench = [], aDraw = [];
+      aHigh = [], aQuench = [], aDraw = [], aQue =[];
       var sOperation, aAppointments = [], aAppointFinal = [];
       var sEquipLast = ""; var oJSON = {};
       for (var i = 0; i <= oDataModel.length; i++) {
@@ -236,6 +236,9 @@ sap.ui.define([
           }
           else if (sOperation === "DRAW") {
             aDraw.push(oJSON);
+          }
+          else if(sOperation === "QUE"){
+            aQue.push(oJSON);
           }
           aAppointFinal = [];
           aAppointments = [];
@@ -254,6 +257,9 @@ sap.ui.define([
           }
           else if (sOperation === "DRAW") {
             aDraw.push(oJSON);
+          }
+          else if(sOperation === "QUE"){
+            aQue.push(oJSON);
           }
           aAppointments = [];
           oJSON = {};
@@ -461,6 +467,8 @@ sap.ui.define([
     onBeforeRendering: function () {
       var oThat = this;
       this.oMoveTrayModel = this.getOwnerComponent().getModel("moveTrayDataService");
+      this.oVisibilityModel = this.getOwnerComponent().getModel("visibilityModel")
+      this.getView().setModel(this.oVisibilityModel,"visibilityModel");
       try {
         sWarehouse = sap.ui.getCore().getModel("JSONModel").getProperty("/SelectionValue").Warehouse;
       }
@@ -495,6 +503,7 @@ sap.ui.define([
             people1: aHigh,
             people2: aQuench,
             people3: aDraw,
+            people4: aQue,
             legendItems: [
               {
                 text: "Close to Being Done",
@@ -705,15 +714,28 @@ sap.ui.define([
       var selectedItem = sap.ui.getCore().byId("leaveRequestTable").getSelectedItems();
       this.getDestinationBins();
       this._moveTrayDialog = null;
+      if (selectedItem.length > 0) {
+      var trayNumber = selectedItem[0].getAggregation("cells")[0].getText();
+      this.fetchPreviousDetails(trayNumber);
+      // this._moveTrayDialog = sap.ui.xmlfragment(
+      //   "ey.meg.root.fragments.MoveTray",
+      //   this);
+      // this.getView().addDependent(this._moveTrayDialog);
+      // this._moveTrayDialog.open();
+      }
+      else{
+        sap.m.MessageBox.error("Select Tray to Move");
+      }
 
-      this._moveTrayDialog = sap.ui.xmlfragment(
-        "ey.meg.root.fragments.MoveTray",
-        this);
-      this.getView().addDependent(this._moveTrayDialog);
-      this._moveTrayDialog.open();
 
 
+    },
+    onSelectTime: function(oEvent){
 
+      var selectedTime = this.convertTimeStamp(oEvent.getParameter("value"));
+      //this.getDestinationBins(selectedTime);
+
+      // var selectedTime = this.convertTimeStamp(selectedTime)
     },
     onSelectStorageBin: function (oEvent) {
       var moveTrayData = this.getOwnerComponent().getModel("moveTrayDataService");
@@ -778,6 +800,11 @@ sap.ui.define([
 
           },
           error: function (oError) {
+            var errorMsg="";
+            if(JSON.parse(oError.responseText)){
+              errorMsg = JSON.parse(oError.responseText).error.message.value;
+            }
+            sap.m.MessageBox.error(errorMsg);
             console.log(oError);
           }
         });
@@ -787,6 +814,22 @@ sap.ui.define([
       }
 
 
+    },
+    setMoveTrayData: function(data){
+      var moveTrayData = this.getOwnerComponent().getModel("moveTrayDataService").getData();
+      moveTrayData.Starthigh = this.msToHMS(data.Starthigh);
+      moveTrayData.Finishhigh = this.msToHMS(data.Finishhigh);
+      moveTrayData.Fb = this.msToHMS(data.Fb);
+      moveTrayData.Opinitial = data.Opinitial;
+      moveTrayData.Startlow = this.msToHMS(data.Startlow);
+      moveTrayData.Finishlow = this.msToHMS(data.Finishlow);
+      moveTrayData.Sac = this.msToHMS(data.Sac);
+      moveTrayData.Note = data.Note;
+      moveTrayData.Destinationbin = data.Destinationbin;
+      moveTrayData.Storagetype = data.Storagetype;
+      
+      // this._moveTrayDialog.open();
+      // this.getView().setModel(this.getOwnerComponent().getModel("moveTrayDataService"),"moveTrayDataService");
     },
     resetMoveTrayData: function () {
       var moveTrayData = this.getOwnerComponent().getModel("moveTrayDataService").getData();
@@ -801,26 +844,85 @@ sap.ui.define([
       moveTrayData.Note = "";
       moveTrayData.Destinationbin = "";
       moveTrayData.Storagetype = "";
+      //this.oVisibilityModel.setProperty("/destComboBox",false);
 
 
 
     },
+    msToHMS: function(ms) {
+      if(ms && ms.ms){
+      var seconds = ms.ms / 1000;
+      const hours = parseInt( seconds / 3600 ); 
+      seconds = seconds % 3600; 
+      const minutes = parseInt( seconds / 60 ); // 60 seconds in 1 minute
+      seconds = seconds % 60;
+      return  hours+":"+minutes+":"+seconds;
+      }
+      else{
+        return "00:00:00";
+      }
+    },
     onCloseMoveTray: function (oEvent) {
+      this.resetMoveTrayData();
       this._moveTrayDialog.close();
+      //that._moveTrayDialog = null;
+    },
+    fetchPreviousDetails: function(trayNumber){
+      var that = this;
+      var sURL = "/sap/opu/odata/SAP/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/";
+      var oModel1 = new sap.ui.model.odata.v2.ODataModel(sURL, true);
+      var oFilter = [];
+      oFilter.push(new Filter("Traynumber", sap.ui.model.FilterOperator.EQ, trayNumber));
+      //oFilter.push(new Filter("StartTime", sap.ui.model.FilterOperator.EQ,  selectedtime));
+      oModel1.read("/TodetailsSet", {
+        filters: oFilter,
+        success: function (oData, oResponse) {
+          
+          if(oData.results.length > 0){
+              that.setMoveTrayData(oData.results[0]);
+          }
+          that._moveTrayDialog = sap.ui.xmlfragment(
+            "ey.meg.root.fragments.MoveTray",
+            that);
+          that.getView().addDependent(that._moveTrayDialog);
+          that._moveTrayDialog.open();
+          that.getView().setModel(that.getOwnerComponent().getModel("moveTrayDataService"),"moveTrayDataService");
+          
+          
+        },
+        error: function (oError) {
+          that._moveTrayDialog = sap.ui.xmlfragment(
+            "ey.meg.root.fragments.MoveTray",
+            that);
+          that.getView().addDependent(that._moveTrayDialog);
+          that._moveTrayDialog.open();
+          that.getView().setModel(that.getOwnerComponent().getModel("moveTrayDataService"),"moveTrayDataService");
+        }
+      });
     },
     getDestinationBins: function () {
       var that = this;
       var sURL = "/sap/opu/odata/SAP/ZUSPPMEG11E_HEAT_TREAT_SCH_SRV/";
       var oModel1 = new sap.ui.model.odata.v2.ODataModel(sURL, true);
-      var oFilter = new Filter("Lgnum", sap.ui.model.FilterOperator.EQ, that.warehouseNumber);
+      var oFilter = [];
+      oFilter.push(new Filter("Lgnum", sap.ui.model.FilterOperator.EQ, that.warehouseNumber));
+      //oFilter.push(new Filter("StartTime", sap.ui.model.FilterOperator.EQ,  selectedtime));
       oModel1.read("/StorageTypeSet", {
-        filters: [oFilter],
+        filters: oFilter,
         success: function (oData, oResponse) {
           var jsonModel = new JSONModel;
           jsonModel.setData({ "DestinationSet": oData.results });
           that.getOwnerComponent().setModel(jsonModel, "DestinationBinModel");
+          that.oVisibilityModel.setProperty("/destComboBox",true);
+          // sap.ui.getCore().byId("destComboBox").setEnabled(true);
         },
         error: function (oError) {
+          var errorMsg="";
+          if(JSON.parse(oError.responseText)){
+            errorMsg = JSON.parse(oError.responseText).error.message.value;
+          }
+          sap.m.MessageBox.error(errorMsg);
+          console.log(oError);
 
         }
       });

@@ -20,7 +20,7 @@
         </endButton>
         <beginButton>
             <Button
-                text="Move Tray"
+                text="Submit"
                 press="handleMoveTray"
             />
         </beginButton>
@@ -46,13 +46,13 @@
             <core:Title class="" text=""/>
             <Label text="Start High"/>
 			<TimePicker  showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Starthigh'}"/>
+            value="{ path: 'moveTrayDataService>/Starthigh'}" />
             <Label text="Finish High"/>
 			<TimePicker showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
             value="{ path: 'moveTrayDataService>/Finishhigh'}"/>
             <Label text="FB"/>
 			<TimePicker showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Fb'}"/>
+            value="{ path: 'moveTrayDataService>/Fb'}" />
             
             <Label text="Operator Initials"/>
 			<Input maxLength="12" value="{moveTrayDataService>/Opinitial}"/>
@@ -61,13 +61,13 @@
             <core:Title class="" text=""/>
             <Label text="Start Low"/>
 			<TimePicker  showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Startlow'}"/>
+            value="{ path: 'moveTrayDataService>/Startlow'}" />
             <Label text="Finish Low"/>
 			<TimePicker showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
             value="{ path: 'moveTrayDataService>/Finishlow'}"/>
             <Label text="SAC"/>
 			<TimePicker  showCurrentTimeButton="true" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="HH:MM:SS"
-            value="{ path: 'moveTrayDataService>/Sac'}"/>
+            value="{ path: 'moveTrayDataService>/Sac'}" change="onSelectTime"/>
             <Label text=""/>
             <Text text=""/>
             <Label text="Destination" />
@@ -76,6 +76,7 @@
 					filterSecondaryValues= "true"
                     selectedKey="{moveTrayDataService>/Destinationbin}"
                     selectionChange="onSelectStorageBin"
+                    enabled="{visibilityModel>/destComboBox}"
 					items="{
 						path: 'DestinationBinModel>/DestinationSet'
 						
